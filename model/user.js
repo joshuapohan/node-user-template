@@ -21,6 +21,11 @@ var UserSchema = new mongoose.Schema({
 		required: true,
 		minlength: 6
 	},
+	isActivated: {
+		type: Boolean,
+		required: true,
+		default: false
+	},
 	tokens: [{
 		access: {
 			type:String,
@@ -56,7 +61,6 @@ UserSchema.methods.toJSON = function(){
 };
 
 UserSchema.statics.findByToken = function(token){
-	var User = this;
 	var decoded;
 
 	try{
@@ -70,7 +74,6 @@ UserSchema.statics.findByToken = function(token){
 		'tokens.token': token,
 		'tokens.access': 'auth'
 	})
-
 };
 
 UserSchema.statics.findByCredential = function(credential){
